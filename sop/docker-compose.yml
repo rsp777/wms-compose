@@ -82,7 +82,7 @@ services:
       retries: 3
       
 networks:
-   kafka_default :
-      external: true
+  kafka_default:
+    external: true
 #volumes:
-  #sop-config-service:
+#  sop-config-service:
