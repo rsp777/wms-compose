@@ -9,7 +9,7 @@ services:
     ports:
       - "8089:8089"
     networks:
-      - kafka_default  
+      - wms  
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -82,7 +82,7 @@ services:
       retries: 3
       
 networks:
-  kafka_default:
+  wms:
     external: true
 #volumes:
 #  sop-config-service:
