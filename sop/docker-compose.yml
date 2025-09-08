@@ -9,7 +9,7 @@ services:
     ports:
       - "8089:8089"
     networks:
-      - wms  
+      - sop_wms  
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -82,7 +82,7 @@ services:
       retries: 3
       
 networks:
-  wms:
+  sop_wms:
     driver: bridge
 #volumes:
 #  sop-config-service:
