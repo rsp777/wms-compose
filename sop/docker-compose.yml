@@ -83,6 +83,6 @@ services:
       
 networks:
   wms:
-    external: true
+    driver: bridge
 #volumes:
 #  sop-config-service:
