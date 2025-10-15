@@ -13,7 +13,7 @@ services:
       replicas: 2
       endpoint_mode: vip 
     volumes:
-      - ./item-integration-service:/item-integration-service/data
+      - item-integration-service:/item-integration-service/data
     environment:
       # Example environment variable
       SPRING_PROFILES_ACTIVE: prod
