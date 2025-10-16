@@ -15,7 +15,7 @@ services:
     volumes:
       - item-integration-service:/item-integration-service/data
     networks:
-      - integration_network
+      - portainer_agent_agent_network
 
     environment:
       # Example environment variable
@@ -97,5 +97,5 @@ services:
 volumes:
   item-integration-service:
 networks:
-  integration_network:
+  portainer_agent_agent_network:
     external: true
