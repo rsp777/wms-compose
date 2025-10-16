@@ -98,3 +98,4 @@ volumes:
   item-integration-service:
 networks:
   integration_network:
+    external: true
