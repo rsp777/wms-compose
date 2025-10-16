@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   item-integration-service:
@@ -11,9 +11,15 @@ services:
     deploy:
       mode: replicated
       replicas: 2
-      endpoint_mode: vip 
+      endpoint_mode: vip
     volumes:
       - item-integration-service:/item-integration-service/data
+    networks:
+      agent_network:
+        driver: overlay
+        ipam:
+          config:
+            - subnet: 10.12.0.0/16
     environment:
       # Example environment variable
       SPRING_PROFILES_ACTIVE: prod
@@ -57,7 +63,7 @@ services:
       MANAGEMENT_ENDPOINT_SHUTDOWN_ENABLED: "true"
       MANAGEMENT_INFO_ENV_ENABLED: "true"
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: never
-      SPRING_CONFIG_DEBUG: "false"	
+      SPRING_CONFIG_DEBUG: "false"
       CONNECTION_TIMEOUT: 20
       RESPONSE_TIMEOUT: 20
       CONNECTION_RESPONSE_TIMEOUT: 20
@@ -70,20 +76,28 @@ services:
       SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
       SPRING_KAFKA_PRODUCER_KEY_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
       SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
-  
+
     restart: always
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8087/item-integration-service/actuator/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8087/item-integration-service/actuator/health",
+        ]
       interval: 30s
       timeout: 5s
       retries: 3
 #  nginx:
- #   image: nginx:alpine
- #   ports:
- #    - "8084:80"  # Single host port
- #   volumes:
- #    - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount a custom config
-  #  depends_on:
-  #  - asn-integration-service
+#   image: nginx:alpine
+#   ports:
+#    - "8084:80"  # Single host port
+#   volumes:
+#    - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount a custom config
+#  depends_on:
+#  - asn-integration-service
 volumes:
   item-integration-service:
