@@ -11,8 +11,10 @@ services:
     deploy:
       mode: replicated
       replicas: 1 
-    #volumes:
-     # - ./asn-integration-service:/app
+    volumes:
+      - ./asn-integration-service:/asn-integration-service/data
+     networks:
+      - portainer_agent_agent_network
     environment:
       # Example environment variable
       SPRING_PROFILES_ACTIVE: prod
@@ -85,9 +87,11 @@ services:
  #   image: nginx:alpine
  #   ports:
  #    - "8084:80"  # Single host port
- #   volumes:
- #    - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount a custom config
-  #  depends_on:
+volumes:
+  asn-integration-service:
+networks:
+  portainer_agent_agent_network:
+    external: true
   #  - asn-integration-service
 #volumes:
   #asn-integration-service:
