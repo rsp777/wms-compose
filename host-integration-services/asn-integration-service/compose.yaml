@@ -13,7 +13,7 @@ services:
       replicas: 1 
     volumes:
       - ./asn-integration-service:/asn-integration-service/data
-     networks:
+    networks:
       - portainer_agent_agent_network
     environment:
       # Example environment variable
