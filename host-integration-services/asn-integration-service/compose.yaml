@@ -12,7 +12,7 @@ services:
       mode: replicated
       replicas: 1 
     volumes:
-      - ./asn-integration-service:/asn-integration-service/data
+      - asn-integration-service:/asn-integration-service/data
     networks:
       - portainer_agent_agent_network
     environment:
