@@ -5,7 +5,7 @@ services:
     build:
       context: .
       # target: final
-    image: "rsp777/item-integration-service:0.0.1-SNAPSHOT"
+    image: "rsp777/item-integration-service:1.0.0"
     ports:
       - "8087:8087"
     deploy:
