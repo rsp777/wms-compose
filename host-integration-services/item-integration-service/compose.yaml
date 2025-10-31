@@ -10,7 +10,7 @@ services:
       - "8087:8087"
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       endpoint_mode: vip
     volumes:
       - item-integration-service:/item-integration-service/data
