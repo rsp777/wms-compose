@@ -22,7 +22,7 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       # Custom environment variables for your application properties
       #CONFIG_SERVER_URL: http://config-server:8888
-      DATABASE_URL: "jdbc:mysql://mysql-server.tailc9a488.ts.net:3306/item-integration"
+      DATABASE_URL: "jdbc:mysql://100.66.109.82:3306/item-integration"
       DATABASE_USERNAME: ravi
       DATABASE_PASSWORD: ravi
       JAVA_OPTS: "-Xms512m -Xmx1024m"
