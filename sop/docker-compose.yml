@@ -12,7 +12,9 @@ services:
       mode: replicated
       replicas: 1
     volumes:
-      - sop-assignment-service:/sop-assignment-service/data
+      - sop-config-service:/sop-config-service/data
+    networks:
+      - portainer_agent_agent_network
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -107,6 +109,8 @@ services:
       replicas: 1
     volumes:
       - sop-assignment-service:/sop-assignment-service/data
+    networks:
+      - portainer_agent_agent_network
     environment:
       # Example environment variable
       SPRING_PROFILES_ACTIVE: prod
@@ -211,6 +215,8 @@ services:
       replicas: 1
     volumes:
       - sop-unassignment-service:/sop-unassignment-service/data
+    networks:
+      - portainer_agent_agent_network
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -321,7 +327,9 @@ services:
       mode: replicated
       replicas: 1
     volumes:
-      - sop-unassignment-service:/sop-unassignment-service/data
+      - sop-realtime-assignment-service:/sop-realtime-assignment-service/data
+    networks:
+      - portainer_agent_agent_network
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -431,6 +439,8 @@ services:
       replicas: 1
     volumes:
       - sop-realtime-unassignment-service:/sop-realtime-unassignment-service/data
+    networks:
+      - portainer_agent_agent_network
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -544,7 +554,9 @@ services:
       mode: replicated
       replicas: 3
     volumes:
-      - sop-log-service:/sop-log-service/data    
+      - sop-log-service:/sop-log-service/data
+    networks:
+      - portainer_agent_agent_network      
     #volumes:
     #  - ./sop-config-service:/app
     environment:
@@ -630,3 +642,7 @@ volumes:
   sop-realtime-assignment-service:
   sop-realtime-unassignment-service:
   sop-log-service:
+  
+networks:
+  portainer_agent_agent_network:
+    external: true
