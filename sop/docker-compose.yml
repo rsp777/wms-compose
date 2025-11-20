@@ -15,7 +15,7 @@ services:
       SPRING_PROFILES_ACTIVE: prod
 
       # Custom environment variables for your application properties
-      CONFIG_SERVER_URL: http://config-server:8888
+      CONFIG_SERVER_URL: http://localhost:8888
       DATABASE_URL: jdbc:mysql://mysql-server.tailc9a488.ts.net:3306/sop
       DATABASE_USERNAME: ravi
       DATABASE_PASSWORD: ravi
@@ -45,7 +45,7 @@ services:
 
       LOGGING_LEVEL_ORG_HIBERNATE_SQL: off
       # HIBERNATE_ID_NEW_GENERATOR_MAPPINGS: "true"  # Uncomment if needed
-
+      LOGGING_LEVEL_ROOT: INFO	
       SPRING_JACKSON_SERIALIZATION_WRITE_DATES_AS_TIMESTAMPS: "false"
       SPRING_JACKSON_DATE_FORMAT: yyyy-MM-dd'T'HH:mm:ssZ
 
@@ -78,5 +78,106 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+
 #volumes:
-#  sop-config-service:
+  #sop-config-service:
+  
+  sop-assignment-service:
+    build:
+      context: .
+      # target: final
+    image: rsp777/sop-assignment-service:Dev_v2.1
+    ports:
+      - "8090:8090"
+	deploy:
+	  mode: replicated
+      replicas: 1   
+	  volumes:
+	   - sop-assignment-service:/sop-assignment-service/data
+    environment:
+      # Example environment variable
+      SPRING_PROFILES_ACTIVE: prod
+
+      # Custom environment variables for your application properties
+      CONFIG_SERVER_URL: http://localhost:8888
+      DATABASE_URL: jdbc:mysql://mysql-server.tailc9a488.ts.net:3306/sop
+      DATABASE_USERNAME: ravi
+      DATABASE_PASSWORD: ravi
+      JAVA_OPTS: -Xms512m -Xmx1024m
+
+      # Application properties as environment variables
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://localhost:8761/eureka
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+      EUREKA_CLIENT_HEALTHCHECK_ENABLED: "false"
+
+      SERVER_SERVLET_CONTEXT_PATH: /sop-assignment-service
+      # SERVER_ADDRESS: "0.0.0.0"  # Uncomment if needed
+      SERVER_PORT: 8090
+
+      SPRING_APPLICATION_NAME: sop-assignment-service
+      CONNECTION_TIMEOUT: 20
+      RESPONSE_TIMEOUT: 20
+      CONNECTION_REQUEST_TIMEOUT: 20
+      INVN_LOCATIONS_SERVICE_GET: https://app.inventory-wms.duckdns.org/locations/list
+      INVN_LOCATIONS_SERVICE_GET_RANGE: https://app.inventory-wms.duckdns.org/locations/list/by-range?fromLocation={fromLocation}&toLocation={toLocation}
+      INVN_LPNS_SERVICE_GET: https://app.inventory-wms.duckdns.org/lpns/list
+      INVN_LPNS_SERVICE_GET_CATEGORY: https://app.inventory-wms.duckdns.org/lpns/list/category/{category}
+      INVN_INVENTORY_SERVICE_CHECKACTIVEINVENTORY: https://app.inventory-wms.duckdns.org/inventory/checkActiveInventory
+      INVN_INVENTORY_SERVICE_ACTIVE_SOP: https://app.inventory-wms.duckdns.org/inventory/createActSop
+      SOP_LOG_SERVICE: https://log.slotting-services.duckdns.org/sop-log-service
+      SOP_LOG_SERVICE_CREATE_BATCH: https://log.slotting-services.duckdns.org/sop-log-service/create-batch
+      SOP_LOG_SERVICE_UPDATE_BATCH: https://log.slotting-services.duckdns.org/sop-log-service/update-batch
+      SOP_LOG_SERVICE_CREATE_LOG: https://log.slotting-services.duckdns.org/sop-log-service/logs
+      SOP_CONFIG_SERVICE_ELIGIBLE_LOCATIONS: https://config.slotting-services.duckdns.org/sop-config-service/eligible-locations
+      SOP_CONFIG_SERVICE_ELIGIBLE_LOCATIONS_CATEGORY: https://config.slotting-services.duckdns.org/sop-config-service/eligible-locations/category/{category}
+      SOP_CONFIG_SERVICE_ELIGIBLE_LOCATIONS_UPDATE: https://config.slotting-services.duckdns.org/sop-config-service/eligible-locations/update 
+      #SPRING_DATASOURCE_URL: ${DATABASE_URL}
+      #SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      #SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 10
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 30000
+
+      SPRING_JPA_SHOW_SQL: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      # SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.MySQLDialect"  # Uncomment if needed
+
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: off
+      # HIBERNATE_ID_NEW_GENERATOR_MAPPINGS: "true"  # Uncomment if needed
+      LOGGING_LEVEL_ROOT: INFO	
+      SPRING_JACKSON_SERIALIZATION_WRITE_DATES_AS_TIMESTAMPS: "false"
+      SPRING_JACKSON_DATE_FORMAT: yyyy-MM-dd'T'HH:mm:ssZ
+
+      SPRING_MAIN_ALLOW_CIRCULAR_REFERENCES: "true"
+      SPRING_MAIN_ALLOW_BEAN_DEFINITION_OVERRIDING: "true"
+
+      LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL_BASICBINDER: INFO
+
+      MANAGEMENT_ENDPOINT_HEALTH_ENABLED: "true"
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+      MANAGEMENT_ENDPOINT_SHUTDOWN_ENABLED: "true"
+      MANAGEMENT_INFO_ENV_ENABLED: "true"
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: never
+
+      SPRING_CONFIG_DEBUG: "false"
+
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.29.52:29092,192.168.29.52:29093,192.168.29.52:29094
+      SPRING_KAFKA_CONSUMER_GROUP_ID: consumer_group5
+      SPRING_KAFKA_CONSUMER_AUTO_OFFSET_RESET: earliest
+      SPRING_KAFKA_CONSUMER_ENABLE_AUTO_COMMIT: "false"
+      SPRING_KAFKA_LISTENER_ACK_MODE: manual
+      SPRING_KAFKA_CONSUMER_KEY_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_PRODUCER_KEY_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
+      SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
+  
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8090/sop-assignment-service/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+	  
+volumes:
+  asn-integration-service:	  
